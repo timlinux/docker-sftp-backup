@@ -1,8 +1,12 @@
-FROM ubuntu:12.04
+FROM kartoza/pg-backup:9.4
 MAINTAINER Rizky Maulana Nugraha<lana.pcfre@gmail.com>
 
 RUN apt-get update
-RUN apt-get install -y cron python-dev python-pip python-paramiko build-essential
+RUN apt-get install -y cron
+RUN apt-get install -y python-dev
+RUN apt-get install -y python-pip
+RUN apt-get install -y python-paramiko
+RUN apt-get install -y build-essential
 RUN pip install --upgrade paramiko
 ADD backups-cron /etc/cron.d/backups-cron
 RUN touch /var/log/cron.log

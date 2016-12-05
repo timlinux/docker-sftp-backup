@@ -9,7 +9,6 @@ import math
 import sftp_remote
 from sftp_remote import get_sftp_session
 
-
 __author__ = 'lucernae'
 __email__ = 'lana.pcfre@gmail.com'
 
@@ -40,13 +39,10 @@ def main():
         # process files
         for f in files:
             # extract timestamp from name in the format:
-            time_format = '%d-%B-%Y'
-            dump_format = '%s.%s.tar.gz' % (
-                dump_prefix,
-                time_format
-            )
             try:
-                dump_time = datetime.strptime(f, dump_format)
+                time_format = '%d-%B-%Y'
+                file_time = f.split('.')[1]
+                dump_time = datetime.strptime(file_time, time_format)
 
                 file_path = os.path.join(root, f)
                 time_diff = today - dump_time
@@ -85,7 +81,7 @@ def main():
                         except Exception as e:
                             print e.message
 
-            except ValueError:
+            except (ValueError, IndexError):
                 continue
 
         # process dirs
